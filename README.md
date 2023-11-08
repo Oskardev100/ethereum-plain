@@ -19,4 +19,4 @@ You do basic tests to Ganache to check balance on your accounts or do basic tran
 # step by stepç
 1. Install and run Ganache UI https://trufflesuite.com/ganache/
 2. Verify what is the URL for your RCP Server, should be something like this: HTTP://127.0.0.1:7545
-3. 
+3. Install web3 npm, by running this command --> npm install web3
