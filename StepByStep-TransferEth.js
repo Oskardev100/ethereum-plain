@@ -3,6 +3,7 @@
 //Step 1. Create a const to hold Web3
 const Web3 = require('web3');
 
+
 //Step 2. Specify the URL of your Ganache blockchain
 const ganacheUrl = 'http://localhost:7545'; // Default Ganache URL
 
