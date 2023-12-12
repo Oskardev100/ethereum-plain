@@ -1,7 +1,9 @@
 //on your NODE terminal, run one by one all this commands on each step.
 
 //Step 1. Create a const to hold Web3
-const Web3 = require('web3');
+//const Web3 = require('web3'); <-- use this for web3 earlier versions than 4x
+//for 4x, use below:
+const { Web3 } = require('web3');
 
 
 //Step 2. Specify the URL of your Ganache blockchain
@@ -22,7 +24,7 @@ web3.eth.net.isListening().then(() => console.log('Connected to Ganache')).catch
 
 //StepTransfer found from one account to other in Ganache
 //Step 5. Set the sender account by copying any of the accounts listed on Ganache and past them in the below constant
-const senderAddress = '0x25DcD13221747FE244D83cC7fd417810496e7371';
+const senderAddress = '0x87A0C3B76770d648C6407406e9214575Ac1dF05c';
 
 //Step 6. Set the receiver account by copying a different accounts listed on Ganache and past them in the below constant
 const receiverAddress = '0x287dd6fFcEb729a23ae02Cb32eA21Fa8f23C4840';
