@@ -54,7 +54,7 @@ const bytecode = compiledCode.contracts[contractFilePath+"SampleContract.sol"]["
 
   // Get the ABI from the compiled contract
 //  const abi = compiledCode.contracts[fileName][fileName].abi;
-  const abi = compiledCode.contracts[contractFilePath+"SampleContract.sol"].SampleContract.abi; 
+  const abi = compiledCode.contracts["./Contracts/SampleContract.sol"].SampleContract.abi
 
   // Write the Contract ABI to a new file in the custom output folder
   //const abiPath = path.join(__dirname, outputFolder, `${fileName}Abi.json`);
