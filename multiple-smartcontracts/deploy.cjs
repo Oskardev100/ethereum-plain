@@ -2,6 +2,9 @@ const { Web3 } = require('web3'); //  web3.js has native ESM builds and (`import
 const fs = require('fs');
 const path = require('path');
 
+//const conctractCodePath = 'CompiledCode\\';
+//const contractName = 'SampleContract';
+
 // Set up a connection to the Ethereum network
 const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
 web3.eth.Contract.handleRevert = true;
@@ -10,9 +13,15 @@ web3.eth.Contract.handleRevert = true;
 const bytecodePath = path.join(__dirname, 'MyContractBytecode.bin');
 const bytecode = fs.readFileSync(bytecodePath, 'utf8');
 
+//const bytecodePath2 = path.join(__dirname, conctractCodePath + contractName + 'Bytecode.bin');
+//const bytecode2 = fs.readFileSync(bytecodePath2, 'utf8');
+
 // Create a new contract object using the ABI and bytecode
 const abi = require('./MyContractAbi.json');
 const myContract = new web3.eth.Contract(abi);
+//const abi2 = require(path.join(__dirname, conctractCodePath, contractName+'Abi.json'));
+//const myContract2 = new web3.eth.Contract(abi2);
+
 
 async function deploy() {
 	const providersAccounts = await web3.eth.getAccounts();
@@ -24,10 +33,27 @@ async function deploy() {
 		arguments: [1],
 	});
 
+	/*const deployedContract2 = myContract2.deploy({
+		data: '0x' + bytecode2,
+		arguments: [1],
+	});*/
+
 	// optionally, estimate the gas that will be used for development and log it
 	const gas = await deployedContract.estimateGas({
 		from: defaultAccount,
 	});
+	/*
+	const estimatedGas = await myContract.deploy({
+		data: bytecode,
+		arguments:  [1],
+	  }).estimateGas({
+		from: defaultAccount,
+		gasPrice: 10000000000,
+	  });
+
+	const gas2 = await deployedContract2.estimateGas({
+		from: defaultAccount,
+	});*/
 	console.log('estimated gas:', gas);
 
 	try {
