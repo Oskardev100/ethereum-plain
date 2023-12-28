@@ -1,66 +1,55 @@
+// import solc from 'solc';
+// import path from 'path';
+// import fs from 'fs';
+
 const solc = require('solc');
 const fs = require('fs');
 const path = require('path');
-const contractFilePath = "./Contracts/";
+//const { contract } = require('web3/lib/commonjs/eth.exports');
 
-// Define an array of contract filenames
-const contractFiles = [contractFilePath + 'SampleContract.sol'];
-const outputFolder = 'CompiledCode'; // Specify the custom output folder
+const fileName = 'SimpleMarketplace.sol';
+const contractName = 'SimpleMarketplace';
 
+// Read the Solidity source code from the file system
+const contractPath = path.join(__dirname, './contracts/' + fileName);
+const sourceCode = fs.readFileSync(contractPath, 'utf8');
 
-// Create the custom output folder if it doesn't exist
-if (!fs.existsSync(outputFolder)) {
-  fs.mkdirSync(outputFolder);
-}
+// solc compiler config
+const input = {
+	language: 'Solidity',
+	sources: {
+		[fileName]: {
+			content: sourceCode,
+		},
+	},
+	settings: {
+		outputSelection: {
+			'*': {
+				'*': ['*'],
+			},
+		},
+	},
+};
 
-// Loop through each contract file and deploy it
-contractFiles.forEach((fileName) => {
-  const contractPath = path.join(__dirname, fileName);
-  const sourceCode = fs.readFileSync(contractPath, 'utf8');
+// Compile the Solidity code using solc
+const compiledCode = JSON.parse(solc.compile(JSON.stringify(input)));
 
-  // solc compiler config
-  const input = {
-    language: 'Solidity',
-    sources: {
-      [fileName]: {
-        content: sourceCode,
-      },
-    },
-    settings: {
-      outputSelection: {
-        '*': {
-          '*': ['*'],
-        },
-      },
-    },
-  };
+// Get the bytecode from the compiled contract
+const bytecode = compiledCode.contracts[fileName][contractName].evm.bytecode.object;
 
-  // Compile the Solidity code using solc
-  const compiledCode = JSON.parse(solc.compile(JSON.stringify(input)));
+// Write the bytecode to a new file
+const bytecodePath = path.join(__dirname, contractName +'Bytecode.bin');
+fs.writeFileSync(bytecodePath, bytecode);
 
-  // Get the bytecode from the compiled contract
-//  const bytecode = compiledCode.contracts[fileName][fileName].evm.bytecode.object;
+// Log the compiled contract code to the console
+console.log('Contract Bytecode:\n', bytecode);
 
-const bytecode = compiledCode.contracts[contractFilePath+"SampleContract.sol"]["SampleContract"].evm.bytecode.object;
-//const bytecode = compiledCode.contracts[SampleContract][SampleContract].evm.bytecode.object;
+// Get the ABI from the compiled contract
+const abi = compiledCode.contracts[fileName][contractName].abi;
 
-  // Write the bytecode to a new file in the custom output folder
-  //const bytecodePath = path.join(__dirname, outputFolder, `${fileName}Bytecode.bin`);
-  const bytecodePath = path.join(__dirname, outputFolder, `${'SampleContract'}Bytecode.bin`);
-  fs.writeFileSync(bytecodePath, bytecode);
+// Write the Contract ABI to a new file
+const abiPath = path.join(__dirname, contractName + 'Abi.json');
+fs.writeFileSync(abiPath, JSON.stringify(abi));
 
-  // Log the compiled contract code to the console
-  console.log(`Contract Bytecode for ${fileName}:\n`, bytecode);
-
-  // Get the ABI from the compiled contract
-//  const abi = compiledCode.contracts[fileName][fileName].abi;
-  const abi = compiledCode.contracts["./Contracts/SampleContract.sol"].SampleContract.abi
-
-  // Write the Contract ABI to a new file in the custom output folder
-  //const abiPath = path.join(__dirname, outputFolder, `${fileName}Abi.json`);
-  const abiPath = path.join(__dirname, outputFolder, `${'SampleContract'}Abi.json`);
-  fs.writeFileSync(abiPath, JSON.stringify(abi, null, '\t'));
-
-  // Log the Contract ABI to the console
-  console.log(`Contract ABI for ${fileName}:\n`, abi);
-});
+// Log the Contract ABI to the console
+console.log('Contract ABI:\n', abi);
