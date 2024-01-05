@@ -5,6 +5,8 @@ function App() {
   const [web3, setWeb3] = useState(null);
   const [accounts, setAccounts] = useState([]);
   const [balances, setBalances] = useState({});
+  const [contractAddress, setContractAddress] = useState('0xFc1e1C29bC30D63192712EeD65b2eF6B64157FA3'); // Add the smart contract address
+  const [contractBalance, setContractBalance] = useState('');
 
   useEffect(() => {
     // Connect to Ganache CLI
@@ -42,12 +44,24 @@ function App() {
     }
   };
 
+  // Function to get smart contract balance
+  const getContractBalance = async () => {
+    if (web3 && contractAddress) {
+      try {
+        const balance = await web3.eth.getBalance(contractAddress);
+        setContractBalance(web3.utils.fromWei(balance, 'ether'));
+      } catch (error) {
+        console.error('Error getting contract balance:', error);
+      }
+    }
+  };
+
   return (
     <div className="App">
       <h1>Ethereum React App</h1>
       <p>Connected Accounts: {accounts.join(', ')}</p>
       
-      <button onClick={getAccountBalances}>Get Balances</button>
+      <button onClick={getAccountBalances}>Get Account Balances</button>
 
       <h2>Account Balances</h2>
       <ul>
@@ -58,6 +72,19 @@ function App() {
           </li>
         ))}
       </ul>
+
+      <div>
+        <label>Smart Contract Address:</label>
+        <input
+          type="text"
+          value={contractAddress}
+          onChange={(e) => setContractAddress(e.target.value)}
+        />
+        <button onClick={getContractBalance}>Get Contract Balance</button>
+        <p>
+          <strong>Smart Contract Balance:</strong> {contractBalance || 'N/A'} ETH
+        </p>
+      </div>
     </div>
   );
 }
