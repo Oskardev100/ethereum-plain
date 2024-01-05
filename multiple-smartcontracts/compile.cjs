@@ -1,14 +1,10 @@
-// import solc from 'solc';
-// import path from 'path';
-// import fs from 'fs';
-
 const solc = require('solc');
 const fs = require('fs');
 const path = require('path');
 //const { contract } = require('web3/lib/commonjs/eth.exports');
 
-const fileName = 'SimpleMarketplace.sol';
-const contractName = 'SimpleMarketplace';
+const fileName = 'Auction.sol';
+const contractName = 'Auction';
 
 // Read the Solidity source code from the file system
 const contractPath = path.join(__dirname, './contracts/' + fileName);
