@@ -24,10 +24,10 @@ web3.eth.net.isListening().then(() => console.log('Connected to Ganache')).catch
 
 //StepTransfer found from one account to other in Ganache
 //Step 5. Set the sender account by copying any of the accounts listed on Ganache and past them in the below constant
-const senderAddress = '0x57D2D144e8F2edfdA70bc9a7397dfC691B10Df84';
+const senderAddress = '0x1E446B2cE620b67F9ECEc140Cfa3A8238fF834a9';
 
 //Step 6. Set the receiver account by copying a different accounts listed on Ganache and past them in the below constant
-const receiverAddress = '0x72CC54CD714B66C4f18fF4A3c3DbbFFa99516B02';
+const receiverAddress = '0x76bb2E15acda9578c4Fe9Ef068a9cc5A67561aa0';
 
 //Step 7. Set amount of the transfer
 const amountToSend = web3.utils.toWei('1', 'ether'); // 1 ether

@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 //const { contract } = require('web3/lib/commonjs/eth.exports');
 
-const fileName = 'SimpleMarketplace.sol';
-const contractName = 'SimpleMarketplace';
+const fileName = 'SimpleMarketplace_v2.sol';
+const contractName = 'SimpleMarketplace_v2';
 
 // Read the Solidity source code from the file system
 const contractPath = path.join(__dirname, './contracts/' + fileName);

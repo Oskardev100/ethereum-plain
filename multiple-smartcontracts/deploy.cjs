@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 //const conctractCodePath = 'CompiledCode\\';
-const contractName = 'SimpleMarketplace';
+const contractName = 'SimpleMarketplace_v2';
 
 // Set up a connection to the Ethereum network
 const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
@@ -20,7 +20,7 @@ const myContract = new web3.eth.Contract(abi);
 
 async function deploy() {
 	const providersAccounts = await web3.eth.getAccounts();
-	const defaultAccount = providersAccounts[1];
+	const defaultAccount = providersAccounts[0];
 	console.log('deployer account:', defaultAccount);
 
 	const deployedContract = myContract.deploy({
