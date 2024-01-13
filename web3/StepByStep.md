@@ -68,3 +68,53 @@ Step by Step:
 	myContract.methods.myUint().call().then(result => {
 		console.log(result.toString());
 	});
+
+
+
+
+******************************** Additional functions ********************************
+myContract.methods.myUint().call().then(result => {
+		console.log(result.toString());
+	});
+
+myContract.methods.setUint(50)
+	.send({ from: "0x7eAa0Ea0BA1e507641802EDe84428c956906fa17"})
+	.then(result => {console.log(result)});
+
+
+//Get Item Price
+myContract.methods.itemPrice().call().then(result => {
+		console.log(result.toString());
+	});
+
+
+// Set item price
+const newPrice = web3.utils.toWei("2000", "wei")
+myContract.methods.setItemPrice(newPrice).send({
+            from: "0x7eAa0Ea0BA1e507641802EDe84428c956906fa17",
+    })
+    .on('transactionHash', function(hash) {
+        console.log("Transaction Hash:", hash);
+    })
+    .on('receipt', function(receipt) {
+        console.log("Transaction Receipt:", receipt);
+    })
+    .on('error', function(error) {
+        console.error("Transaction Error:", error);
+    });
+
+
+//buy Item
+myContract.methods.buyItem().send({
+        from: "0xCeab78482ac6aEa0e8300aA587ce8b72dA1A3362",
+        value: web3.utils.toWei("2000", "wei"), // Example: sending 1000 wei
+    })
+    .on('transactionHash', function(hash) {
+        console.log("Transaction Hash:", hash);
+    })
+    .on('receipt', function(receipt) {
+        console.log("Transaction Receipt:", receipt);
+    })
+    .on('error', function(error) {
+        console.error("Transaction Error:", error);
+    });
